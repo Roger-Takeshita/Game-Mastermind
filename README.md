@@ -175,3 +175,104 @@ State can only be changed by the component that "owns" that state.
 
 * Today's complex front-end application often consist of many components, general purpose modules, third-party libraries, etc. that have dependencies between then.
 * How do all of these different parts that depend on each other find each other? **Tooling** of course - in this case module bundler. Module bundler enables us to export and import functionality similar to what we have been doing in Node.
+
+<h2 id='state'>State</h2>
+
+<h3 id='whatisstate'>What is State?</h3>
+
+[Go Back to Summary](#summary)
+
+<h4>State in React</h4>
+
+* State in a React app is held in a class components's `state` property.
+* Since data/information can only pass **down** the component hierarchy, not up, it's a good idea to kep state as high up in the hierarchy as possible, at least initially. For most app's, the top of the hierarchy is the `<App>` component.
+* **Only class components have states** (ignoring the new 'hooks' for now).
+
+<h3 id='initializingstate'>Initializing State</h3>
+
+[Go Back to Summary](#summary)
+
+* Initialize some state by creating a constructor method inside the class
+
+  ```JavaScript
+    class App extends React.Component {
+      constructor() {
+        super();            //! super must be called before accessing 'this'
+        this.state = {      //! state is an object that holds information lin its properties
+          selColorIdx: 0
+        };
+      }
+      render() {
+        return (
+          <div>
+            ...
+          </div>
+        );
+      }
+    }
+  ```
+
+<h3 id='updatingstate'>Update State</h3>
+
+[Go Back to Summary](#summary)
+
+* A class component updates its state by calling the `setState` method.
+* **Do not** modify state directly like this `this.state.selColorIdx = 1`.
+* **Important:** A component's `setState` method is the only method that can update that component's state. If another components wants to update state up the component hierarchy, it can do so if a method is passed to it via **props**
+
+<h3 id='props'>What are Props</h3>
+
+[Go Back to Summary](#summary)
+
+* A parent component uses props to pass data and references to methods/objects to child components.
+* A prop looks much like an attribute = value pair in an HTML element.
+* You must use camelCase to name your props instead of the kebob-casing preferred in HTML.
+
+<h4 id='passinprops'>Passing Props</h4>
+
+* You must use **curly braces** to pass any value other than simple string (template literals need to be surrounded by curly braces as well).
+
+  ```JavaScript
+    <ColorPicker colors={colors}/>
+  ```
+
+<h4 id='accessingprops'>Accessing Passed Props</h4>
+
+* When a **function component** is being rendered, React will pass in props as the first argument to the funciton like this:
+
+  ```JavaScript
+    const ColorPicker = (props) => {
+      return(
+        //If you have more than line of code
+      )
+    }
+
+    //OR
+
+    const ColorPicker = (props) => (
+      //If you have only one line of code, you don't need to write the return
+    )
+  ```
+
+* However, a **Class Component** will access props via a property on the instance (`this`) like this:
+
+  ```JavaScript
+    {this.props.myProp}
+  ```
+
+<h4 id='propscannotchange'>Props Cannot be Changed</h4>
+
+* Props are immutable, their value are never to be changed.
+* Remember, the prop came from a component somewhere up the hierarchy and if the prop's value originated from state, it would be **that** component's responsability to update its own state.
+
+<h4 id='differencestate'>Difference Between State & Props</h4>
+
+* **State**
+  * `this.state` holds informations "owned" by that component
+  * State can be modified with `this.setState`
+  * When changed, causes a component and all of its children and their children to render.
+
+* **Props**
+  * `props` or `this.props` holds information passed down the component hierarchy
+  * Props cannot be modified
+  * **N/A**. However, it is possible to call a method passed as a prop that updates state in the component that "own" it
