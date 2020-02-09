@@ -1,10 +1,14 @@
 import React from 'react';
 import styles from './ColorPicker.module.css';
 
-const ColorPicker = (prorps) => {
+const ColorPicker = (props) => {
     return(
-        <div className={`${styles.ColorPicker} component`}>
-            ColorPicker
+        <div className={styles.ColorPicker}>
+            {props.colors.map(color => {
+                return(
+                    <button key={color}>{color}</button>
+                )
+            })}
         </div>
     )
 }

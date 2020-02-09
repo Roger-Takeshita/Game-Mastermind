@@ -3,7 +3,7 @@ import styles from './GameTimer.module.css';
 
 const GameTimer = (props) => {
     return(
-        <div className={`${styles.GameTimer} component`}>
+        <div className={styles.GameTimer}>
             GameTimer
         </div>
     )

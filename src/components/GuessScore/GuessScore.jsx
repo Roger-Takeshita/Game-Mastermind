@@ -3,7 +3,7 @@ import styles from './GuessScore.module.css';
 
 const GuessScore = (props) => {
     return(
-        <div className={`${styles.GuessScore} component`}>
+        <div className={styles.GuessScore}>
             GuessScore
         </div>
     )
